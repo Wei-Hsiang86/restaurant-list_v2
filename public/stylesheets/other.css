@@ -1,3 +1,4 @@
+/* main 樣式設定 */
 header {
   overflow: hidden;
 }
@@ -25,12 +26,7 @@ body {
   filter: blur(3px);
 }
 
-.new-container {
-  margin-top: 5%;
-  margin-left: 35%;
-  margin-right: 5%;
-}
-
+/* index 樣式設定 */
 .search-bar .search-bar-outer {
   margin: 0 auto;
   max-width: 680px;
@@ -44,14 +40,6 @@ body {
 
 .search-bar .search-bar-inner h4 {
   color: #9b4b4b;
-}
-
-.search-bar .search-bar-inner .create-link {
-  position: relative;
-  left: 85%;
-  color: #9f672b;
-  font-weight: bold;
-  font-size: 1.2rem;
 }
 
 .form-control::placeholder {
@@ -69,6 +57,12 @@ body {
   border-color: #ced4da;
 }
 
+.intro {
+  margin: 1% 35% -1% 35%;
+  font-size: 1.1rem;
+}
+
+/* new 也有用到 card 樣式 */
 .card {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
@@ -88,6 +82,20 @@ body {
   font-size: 0.8rem;
 }
 
+/* new 樣式設定 */
+.containerForNew {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-header {
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* show 樣式設定 */
 .restaurant-show-title {
   position: relative;
   top: -100px;

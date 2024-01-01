@@ -10,8 +10,10 @@ const Restaurant = db.Restaurant;
 app.engine(".hbs", engine({ extname: ".hbs" }));
 app.set("views", "./views");
 app.set("view engine", ".hbs");
+
 // 使用 static files (樣式風格設定檔)
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.redirect("/restaurants");
@@ -42,26 +44,48 @@ app.get("/restaurants/new", (req, res) => {
 });
 
 app.post("/restaurants", (req, res) => {
-  res.send("add new rest");
+  const name = req.body.name;
+  const name_en = req.body.name_en;
+  const category = req.body.category;
+  const image = req.body.image;
+  const location = req.body.location;
+  const phone = req.body.phone;
+  const google_map = req.body.google_map;
+  const rating = req.body.rating;
+  const description = req.body.description;
+
+  return Restaurant.create({
+    name,
+    name_en,
+    category,
+    image,
+    location,
+    phone,
+    google_map,
+    rating,
+    description,
+  })
+    .then(() => res.redirect("/restaurants"))
+    .catch((err) => console.log(err));
 });
 
 // 查詢路由
-app.get("/search", (req, res) => {
-  const keyword = req.query.keyword?.trim();
-  const matchRestaurants = keyword
-    ? Restaurant.filter((rr) =>
-        Object.values(rr).some((property) => {
-          if (typeof property === "string") {
-            return property
-              .toLocaleLowerCase()
-              .includes(keyword.toLocaleLowerCase());
-          }
-          return false;
-        })
-      )
-    : Restaurant;
-  res.render("index", { restaurants: matchRestaurants, keyword });
-});
+// app.get("/search", (req, res) => {
+//   const keyword = req.query.keyword?.trim();
+//   const matchRestaurants = keyword
+//     ? Restaurant.filter((rr) =>
+//         Object.values(rr).some((property) => {
+//           if (typeof property === "string") {
+//             return property
+//               .toLocaleLowerCase()
+//               .includes(keyword.toLocaleLowerCase());
+//           }
+//           return false;
+//         })
+//       )
+//     : Restaurant;
+//   res.render("index", { restaurants: matchRestaurants, keyword });
+// });
 
 // 設定動態路由
 // app.get("/restaurants/:id", (req, res) => {
