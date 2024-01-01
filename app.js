@@ -1,19 +1,24 @@
 const express = require("express");
+const { engine } = require("express-handlebars");
 const app = express();
+const port = 3000;
 
+// 使用 sequelize 此 ORM 套件來操作資料庫
 const db = require("./models");
 const Restaurant = db.Restaurant;
 
-const port = 3000;
+app.engine(".hbs", engine({ extname: ".hbs" }));
+app.set("views", "./views");
+app.set("view engine", ".hbs");
+// 使用 static files (樣式風格設定檔)
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  res.send("yoyoyo~");
+  res.redirect('/restaurants')
 });
 
 app.get("/restaurants", (req, res) => {
-  return Restaurant.findAll()
-    .then((results) => res.send({ results }))
-    .catch((err) => res.status(422).json(err));
+  res.render('index')
 });
 
 app.get("/restaurants/new", (req, res) => {
