@@ -38,15 +38,57 @@ app.get("/restaurants", (req, res) => {
 });
 
 app.get("/restaurants/new", (req, res) => {
-  res.send("create rest");
+  return res.render("new");
 });
 
 app.post("/restaurants", (req, res) => {
   res.send("add new rest");
 });
 
+// 查詢路由
+app.get("/search", (req, res) => {
+  const keyword = req.query.keyword?.trim();
+  const matchRestaurants = keyword
+    ? Restaurant.filter((rr) =>
+        Object.values(rr).some((property) => {
+          if (typeof property === "string") {
+            return property
+              .toLocaleLowerCase()
+              .includes(keyword.toLocaleLowerCase());
+          }
+          return false;
+        })
+      )
+    : Restaurant;
+  res.render("index", { restaurants: matchRestaurants, keyword });
+});
+
+// 設定動態路由
+// app.get("/restaurants/:id", (req, res) => {
+//   const id = req.params.id;
+//   const restaurant = Restaurant.find((rr) => rr.id.toString() === id);
+//   res.render("show", { restaurant });
+// });
+
 app.get("/restaurants/:id", (req, res) => {
-  res.send(`get restaurant: ${req.params.id}`);
+  const id = req.params.id;
+  return Restaurant.findByPk(id, {
+    attributes: [
+      "id",
+      "name",
+      "name_en",
+      "category",
+      "image",
+      "location",
+      "phone",
+      "google_map",
+      "rating",
+      "description",
+    ],
+    raw: true,
+  })
+    .then((restaurant) => res.render("show", { restaurant }))
+    .catch((err) => console.log(err));
 });
 
 app.get("/restaurants/:id/edit", (req, res) => {

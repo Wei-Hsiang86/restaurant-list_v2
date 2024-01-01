@@ -19,9 +19,16 @@ body {
   z-index: -1;
   margin: -5px;
   height: 360px;
-  background: #dddddd center center url('https://media-cdn.tripadvisor.com/media/photo-m/1280/13/81/27/7b/water-st.jpg');
+  background: #dddddd center center
+    url("https://media-cdn.tripadvisor.com/media/photo-m/1280/13/81/27/7b/water-st.jpg");
   background-size: cover;
   filter: blur(3px);
+}
+
+.new-container {
+  margin-top: 5%;
+  margin-left: 35%;
+  margin-right: 5%;
 }
 
 .search-bar .search-bar-outer {
@@ -37,6 +44,14 @@ body {
 
 .search-bar .search-bar-inner h4 {
   color: #9b4b4b;
+}
+
+.search-bar .search-bar-inner .create-link {
+  position: relative;
+  left: 85%;
+  color: #9f672b;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .form-control::placeholder {
@@ -58,14 +73,14 @@ body {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
-.card img{
+.card img {
   height: 180px;
 }
 
-.card-title{
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+.card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .restaurant-category {
@@ -83,23 +98,19 @@ body {
 }
 
 @media screen and (max-width: 992px) {
-  
-  .card img{
+  .card img {
     height: 115px;
   }
 }
 
 @media screen and (max-width: 768px) {
-  
   .restaurant-show-title {
     font-size: 2rem;
   }
 }
 
 @media screen and (max-width: 575px) {
-  
-  .card img{
+  .card img {
     height: auto;
   }
-  
 }
