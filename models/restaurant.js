@@ -17,12 +17,12 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     name_en: DataTypes.STRING,
     category: DataTypes.STRING,
-    image: DataTypes.STRING(2000),
-    location: DataTypes.STRING(1000),
+    image: DataTypes.STRING,
+    location: DataTypes.STRING,
     phone: DataTypes.STRING,
-    google_map: DataTypes.STRING(2000),
+    google_map: DataTypes.STRING,
     rating: DataTypes.FLOAT,
-    description: DataTypes.STRING(3000)
+    description: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Restaurant',
