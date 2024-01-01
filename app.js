@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 
 app.get("/restaurants", (req, res) => {
   return Restaurant.findAll()
-    .then((rest) => res.send({ rest }))
+    .then((results) => res.send({ results }))
     .catch((err) => res.status(422).json(err));
 });
 
