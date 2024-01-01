@@ -14,11 +14,27 @@ app.set("view engine", ".hbs");
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  res.redirect('/restaurants')
+  res.redirect("/restaurants");
 });
 
 app.get("/restaurants", (req, res) => {
-  res.render('index')
+  return Restaurant.findAll({
+    attributes: [
+      "id",
+      "name",
+      "name_en",
+      "category",
+      "image",
+      "location",
+      "phone",
+      "google_map",
+      "rating",
+      "description",
+    ],
+    raw: true,
+  })
+    .then((restaurants) => res.render("index", { restaurants }))
+    .catch((err) => console.log(err));
 });
 
 app.get("/restaurants/new", (req, res) => {
@@ -47,4 +63,4 @@ app.delete("/restaurants/:id", (req, res) => {
 
 app.listen(port, () => {
   console.log(`express server is running on http://localhost:${port}`);
-})
+});
