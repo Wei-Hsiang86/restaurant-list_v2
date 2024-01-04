@@ -75,7 +75,7 @@ app.post("/restaurants", (req, res) => {
 // app.get("/search", (req, res) => {
 //   const keyword = req.query.keyword?.trim();
 //   const matchRestaurants = keyword
-//     ? Restaurant.filter((rr) =>
+//     ? Restaurant.findAll((rr) =>
 //         Object.values(rr).some((property) => {
 //           if (typeof property === "string") {
 //             return property
@@ -149,7 +149,7 @@ app.put("/restaurants/:id", (req, res) => {
       phone: body.phone,
       google_map: body.google_map,
       rating: body.rating,
-      description:body.description
+      description: body.description,
     },
     { where: { id } }
   ).then(() => res.redirect(`/restaurants/${id}`));
@@ -158,8 +158,9 @@ app.put("/restaurants/:id", (req, res) => {
 app.delete("/restaurants/:id", (req, res) => {
   const id = req.params.id;
 
-  return Restaurant.destroy({ where: { id }})
-    .then(() => res.redirect('/restaurants'))
+  return Restaurant.destroy({ where: { id } }).then(() =>
+    res.redirect("/restaurants")
+  );
 });
 
 app.listen(port, () => {
