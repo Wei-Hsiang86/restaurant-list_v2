@@ -18,7 +18,9 @@
 </div>
 
 <div class="intro">
-  <p><i class="fa-solid fa-star"></i> 點擊 more 知道更多資訊；點擊鉛筆圖案進行編輯</p>
+  <p><i class="fa-solid fa-star"></i> 點擊 more 知道更多資訊</p>
+  <p><i class="fa-solid fa-star"></i> 點擊鉛筆（<i class="fa-solid fa-pen-to-square"></i>）進行編輯</p>
+  <p><i class="fa-solid fa-star"></i> 點擊垃圾桶（<i class="fa-regular fa-trash-can"></i>）可以刪除</p>
   <span><i class="fa-solid fa-star"></i> 新增餐廳請按此：</span>
   <a href="/restaurants/new" class="create-link"><i class="fa-solid fa-champagne-glasses fa-lg"></i></a>
 </div>
@@ -45,8 +47,12 @@
               </span>
 
               <span>
-                <a href="/restaurants/{{restaurant.id}}">more</a>
-                <a href="/restaurants/{{restaurant.id}}/edit"><i class="fa-solid fa-pen-to-square" style="margin-left: 2px;"></i></a>
+                <a href="/restaurants/{{restaurant.id}}" style="margin-right: 1px;">more</a>
+                <a href="/restaurants/{{restaurant.id}}/edit"><i class="fa-solid fa-pen-to-square"
+                    style="margin-left: 2px;"></i></a>
+                <form action="/restaurants/{{restaurant.id}}?_method=DELETE" method="POST" style="display: inline;">
+                  <button type="submit" style="background-color: transparent; border: white"><i class="fa-solid fa-trash-can fa-sm"></i></button>
+                </form>
               </span>
           </div>
         </div>
