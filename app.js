@@ -1,5 +1,6 @@
 const express = require("express");
 const { engine } = require("express-handlebars");
+const methodOverride = require("method-override");
 const app = express();
 const port = 3000;
 
@@ -14,6 +15,7 @@ app.set("view engine", ".hbs");
 // 使用 static files (樣式風格設定檔)
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
 app.get("/", (req, res) => {
   res.redirect("/restaurants");
@@ -87,13 +89,6 @@ app.post("/restaurants", (req, res) => {
 //   res.render("index", { restaurants: matchRestaurants, keyword });
 // });
 
-// 設定動態路由
-// app.get("/restaurants/:id", (req, res) => {
-//   const id = req.params.id;
-//   const restaurant = Restaurant.find((rr) => rr.id.toString() === id);
-//   res.render("show", { restaurant });
-// });
-
 app.get("/restaurants/:id", (req, res) => {
   const id = req.params.id;
   return Restaurant.findByPk(id, {
@@ -116,11 +111,48 @@ app.get("/restaurants/:id", (req, res) => {
 });
 
 app.get("/restaurants/:id/edit", (req, res) => {
-  res.send(`get restaurant edit: ${req.params.id}`);
+  const id = req.params.id;
+  return Restaurant.findByPk(id, {
+    attributes: [
+      "id",
+      "name",
+      "name_en",
+      "category",
+      "image",
+      "location",
+      "phone",
+      "google_map",
+      "rating",
+      "description",
+    ],
+    raw: true,
+  })
+    .then((restaurant) => res.render("edit", { restaurant }))
+    .catch((err) => console.log(err));
+});
+
+app.get("/test", (req, res) => {
+  return res.render("test");
 });
 
 app.put("/restaurants/:id", (req, res) => {
-  res.send("modify restaurant");
+  const body = req.body;
+  const id = req.params.id;
+
+  return Restaurant.update(
+    {
+      name: body.name,
+      name_en: body.name_en,
+      category: body.category,
+      image: body.image,
+      location: body.location,
+      phone: body.phone,
+      google_map: body.google_map,
+      rating: body.rating,
+      description:body.description
+    },
+    { where: { id } }
+  ).then(() => res.redirect(`/restaurants/${id}`));
 });
 
 app.delete("/restaurants/:id", (req, res) => {

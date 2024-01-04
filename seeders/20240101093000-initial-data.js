@@ -28,7 +28,7 @@ module.exports = {
         image:
           "https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/5628/02.jpg",
         location: "台北市中山區林森北路 107 巷 8 號",
-        phone: " 02 2521 2813",
+        phone: "02 2521 2813",
         google_map: "https://goo.gl/maps/cUJEmFSRKyH2",
         rating: 4.3,
         description: "鰻魚、鰻魚飯、真空鰻魚",
