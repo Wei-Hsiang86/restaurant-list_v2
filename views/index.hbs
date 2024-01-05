@@ -27,38 +27,72 @@
 
 {{!-- restaurant list --}}
 <div class="container mt-5">
-  <div class="row">
-    <div class="col-md-10 col-12 mx-auto">
-      <div class="row row-cols-sm-3">
-        {{#each restaurants as |restaurant|}}
-        <div class="card mb-3">
-          <img class="card-img-top" src="{{restaurant.image}}" alt="{{restaurant.name}}" />
-          <div class="card-body p-3">
-            <h5 class="card-title mb-1">{{restaurant.name}}</h6>
-              <h6 class="card-title-en mb-1">{{restaurant.name_en}}</h6>
-              <div class="restaurant-category mb-1">
-                <i class="fas fa-utensils pr-2"></i>
-                {{restaurant.category}}
-              </div>
+  <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3 mx-auto">
 
-              <span class="badge rounded-pill bg-danger font-weight-normal">
-                {{restaurant.rating}}
-                <i class="fas fa-star fa-xs"></i>
-              </span>
+    {{#each restaurants as |restaurant|}}
+    <div class="col">
+      <div class="card p-3 border bg-light">
+        <img class="card-img-top" src="{{restaurant.image}}" alt="{{restaurant.name}}" />
+        <div class="card-body p-3">
+          <h5 class="card-title mb-1">{{restaurant.name}}</h6>
+            <h6 class="card-title-en mb-1">{{restaurant.name_en}}</h6>
+            <div class="restaurant-category mb-1">
+              <i class="fas fa-utensils pr-2"></i>
+              {{restaurant.category}}
+            </div>
 
-              <span>
-                <a href="/restaurants/{{restaurant.id}}" style="margin-right: 1px;">more</a>
-                <a href="/restaurants/{{restaurant.id}}/edit"><i class="fa-solid fa-pen-to-square"
-                    style="margin-left: 2px;"></i></a>
-                <form action="/restaurants/{{restaurant.id}}?_method=DELETE" method="POST" style="display: inline;">
-                  <button type="submit" style="background-color: transparent; border: white"><i class="fa-solid fa-trash-can fa-sm"></i></button>
-                </form>
-              </span>
-          </div>
+            <span class="badge rounded-pill bg-danger font-weight-normal">
+              {{restaurant.rating}}
+              <i class="fas fa-star fa-xs"></i>
+            </span>
+
+            <span>
+              <a href="/restaurants/{{restaurant.id}}" style="margin-right: 1px;">more</a>
+              <a href="/restaurants/{{restaurant.id}}/edit"><i class="fa-solid fa-pen-to-square"
+                  style="margin-left: 2px;"></i></a>
+              <form action="/restaurants/{{restaurant.id}}?_method=DELETE" method="POST" style="display: inline;">
+                <button type="submit" style="background-color: transparent; border: white"><i
+                    class="fa-solid fa-trash-can fa-sm"></i></button>
+              </form>
+            </span>
+
         </div>
-
-        {{/each}}
       </div>
     </div>
+    {{/each}}
+
+    {{!-- <div class="row row-cols-sm-3">
+      {{#each restaurants as |restaurant|}}
+      <div class="card mb-3">
+        <img class="card-img-top" src="{{restaurant.image}}" alt="{{restaurant.name}}" />
+        <div class="card-body p-3">
+          <h5 class="card-title mb-1">{{restaurant.name}}</h6>
+            <h6 class="card-title-en mb-1">{{restaurant.name_en}}</h6>
+            <div class="restaurant-category mb-1">
+              <i class="fas fa-utensils pr-2"></i>
+              {{restaurant.category}}
+            </div>
+
+            <span class="badge rounded-pill bg-danger font-weight-normal">
+              {{restaurant.rating}}
+              <i class="fas fa-star fa-xs"></i>
+            </span>
+
+            <span>
+              <a href="/restaurants/{{restaurant.id}}" style="margin-right: 1px;">more</a>
+              <a href="/restaurants/{{restaurant.id}}/edit"><i class="fa-solid fa-pen-to-square"
+                  style="margin-left: 2px;"></i></a>
+              <form action="/restaurants/{{restaurant.id}}?_method=DELETE" method="POST" style="display: inline;">
+                <button type="submit" style="background-color: transparent; border: white"><i
+                    class="fa-solid fa-trash-can fa-sm"></i></button>
+              </form>
+            </span>
+        </div>
+      </div>
+
+      {{/each}}
+    </div> --}}
+
   </div>
+
 </div>
