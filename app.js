@@ -1,6 +1,7 @@
 const express = require("express");
 const { engine } = require("express-handlebars");
 const methodOverride = require("method-override");
+const { Op } = require("sequelize");
 const app = express();
 const port = 3000;
 
@@ -71,23 +72,54 @@ app.post("/restaurants", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// 查詢路由
-// app.get("/search", (req, res) => {
-//   const keyword = req.query.keyword?.trim();
-//   const matchRestaurants = keyword
-//     ? Restaurant.findAll((rr) =>
-//         Object.values(rr).some((property) => {
-//           if (typeof property === "string") {
-//             return property
-//               .toLocaleLowerCase()
-//               .includes(keyword.toLocaleLowerCase());
-//           }
-//           return false;
-//         })
-//       )
-//     : Restaurant;
-//   res.render("index", { restaurants: matchRestaurants, keyword });
-// });
+//查詢路由
+app.get("/search", (req, res) => {
+  const keyword = req.query.keyword?.trim();
+  return Restaurant.findAll({
+    where: {
+      [Op.or]: [
+        {
+          name: {
+            [Op.like]: "%" + keyword + "%",
+          },
+        },
+        {
+          name_en: {
+            [Op.like]: "%" + keyword + "%",
+          },
+        },
+        {
+          category: {
+            [Op.like]: "%" + keyword + "%",
+          },
+        },
+        {
+          location: {
+            [Op.like]: "%" + keyword + "%",
+          },
+        },
+        {
+          phone: {
+            [Op.like]: "%" + keyword + "%",
+          },
+        },
+        {
+          rating: {
+            [Op.like]: keyword,
+          },
+        },
+        {
+          description: {
+            [Op.like]: "%" + keyword + "%",
+          },
+        },
+      ],
+    },
+    raw: true,
+  })
+    .then((restaurants) => res.render("index", { restaurants }))
+    .catch((err) => console.log(err));
+});
 
 app.get("/restaurants/:id", (req, res) => {
   const id = req.params.id;
@@ -129,10 +161,6 @@ app.get("/restaurants/:id/edit", (req, res) => {
   })
     .then((restaurant) => res.render("edit", { restaurant }))
     .catch((err) => console.log(err));
-});
-
-app.get("/test", (req, res) => {
-  return res.render("test");
 });
 
 app.put("/restaurants/:id", (req, res) => {
