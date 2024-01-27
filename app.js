@@ -6,7 +6,11 @@ const { engine } = require("express-handlebars");
 
 const app = express();
 const port = 3000;
-const router = require('./routes')
+
+const router = require('./routes');
+
+const messageHandler = require("./middlewares/message-handler");
+const errorHandler = require("./middlewares/error-handler");
 
 // handlebars 設定
 app.engine(".hbs", engine({ extname: ".hbs" }));
@@ -29,7 +33,11 @@ app.use(
 
 app.use(flash());
 
+app.use(messageHandler)
+
 app.use(router)
+
+app.use(errorHandler)
 
 app.listen(port, () => {
   console.log(`express server is running on http://localhost:${port}`);

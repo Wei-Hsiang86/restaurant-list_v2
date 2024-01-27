@@ -1,15 +1,4 @@
-{{#if error}}
-<div class="alert alert-warning alert-dismissible mb-0" role="alert">
-  <p>{{error}}</p>
-  <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-{{/if}}
-{{#if message}}
-<div class="alert alert-warning alert-dismissible mb-0" role="alert">
-  <p>{{message}}</p>
-  <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-{{/if}}
+{{> message}}
 
 {{!-- search bar --}}
 <div class="container search-bar">
