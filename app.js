@@ -1,6 +1,8 @@
 const express = require("express");
-const { engine } = require("express-handlebars");
 const methodOverride = require("method-override");
+const flash = require("connect-flash");
+const session = require("express-session");
+const { engine } = require("express-handlebars");
 const { Op } = require("sequelize");
 const { Sequelize } = require("sequelize");
 const app = express();
@@ -10,14 +12,26 @@ const port = 3000;
 const db = require("./models");
 const Restaurant = db.Restaurant;
 
+// handlebars 設定
 app.engine(".hbs", engine({ extname: ".hbs" }));
 app.set("views", "./views");
 app.set("view engine", ".hbs");
 
 // 使用 static files (樣式風格設定檔)
 app.use(express.static("public"));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+
+app.use(
+  session({
+    secret: "ThisIsSecret",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(flash());
 
 app.get("/", (req, res) => {
   res.redirect("/restaurants");
@@ -31,6 +45,7 @@ app.get("/restaurants", (req, res) => {
   const mode = sort.slice(site+1, len)
   const nowMode = (mode === "/restaurants") ? "id" : mode;
 
+  // 排序餐廳用
   option = {
     id: nowMode === "id" ? true : false,
     name1: nowMode === "name" ? true : false,
@@ -42,7 +57,7 @@ app.get("/restaurants", (req, res) => {
     appear: "selected"
   };
 
-  console.log(nowMode)
+  // console.log(nowMode)
 
   return Restaurant.findAll({
     attributes: [
@@ -60,7 +75,12 @@ app.get("/restaurants", (req, res) => {
     raw: true,
     order: [Sequelize.literal(nowMode)],
   })
-    .then((restaurants) => res.render("index", { restaurants, option }))
+    .then((restaurants) => 
+      res.render("index", {
+        restaurants,
+        option,
+        message: req.flash("success"),
+      }))
     .catch((err) => console.log(err));
 });
 
@@ -90,7 +110,10 @@ app.post("/restaurants", (req, res) => {
     rating,
     description,
   })
-    .then(() => res.redirect("/restaurants"))
+    .then(() => {
+      req.flash("success", "新增成功!");
+      return res.redirect("/restaurants")
+  })
     .catch((err) => console.log(err));
 });
 
@@ -160,7 +183,9 @@ app.get("/restaurants/:id", (req, res) => {
     ],
     raw: true,
   })
-    .then((restaurant) => res.render("show", { restaurant }))
+    .then((restaurant) =>
+      res.render("show", { restaurant, message: req.flash("success") })
+    )
     .catch((err) => console.log(err));
 });
 
@@ -202,15 +227,20 @@ app.put("/restaurants/:id", (req, res) => {
       description: body.description,
     },
     { where: { id } }
-  ).then(() => res.redirect(`/restaurants/${id}`));
+  ).then(() => {
+      req.flash("success", "修改成功!");
+      return res.redirect(`/restaurants/${id}`)
+    });
 });
 
 app.delete("/restaurants/:id", (req, res) => {
   const id = req.params.id;
 
-  return Restaurant.destroy({ where: { id } }).then(() =>
-    res.redirect("/restaurants")
-  );
+  return Restaurant.destroy({ where: { id } })
+  .then(() => {
+    req.flash("success", "刪除成功!");
+    return res.redirect("/restaurants")
+  });
 });
 
 app.listen(port, () => {
