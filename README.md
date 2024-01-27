@@ -11,11 +11,12 @@
 
 ## 使用
 
-1. 請先確認有安裝 node.js, npm 與 mysql
+1. 請先確認本地有安裝 node.js 與 mysql
 
 2. 將專案 clone 到本地
 
 3. 在本地開啟之後，透過終端機進入資料夾，輸入：
+   (下載 npm 以及這個專案所需相關套件)
 
    ```
    npm install

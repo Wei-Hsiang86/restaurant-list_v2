@@ -2,6 +2,7 @@ const express = require("express");
 const { engine } = require("express-handlebars");
 const methodOverride = require("method-override");
 const { Op } = require("sequelize");
+const { Sequelize } = require("sequelize");
 const app = express();
 const port = 3000;
 
@@ -23,6 +24,26 @@ app.get("/", (req, res) => {
 });
 
 app.get("/restaurants", (req, res) => {
+  const webPara = req.originalUrl
+  const sort = webPara.includes("+") ? webPara.replace("+", " ") : webPara
+  const site = sort.indexOf("=")
+  const len = sort.length
+  const mode = sort.slice(site+1, len)
+  const nowMode = (mode === "/restaurants") ? "id" : mode;
+
+  option = {
+    id: nowMode === "id" ? true : false,
+    name1: nowMode === "name" ? true : false,
+    name2: nowMode === "name DESC" ? true : false,
+    rating1: nowMode === "rating" ? true : false,
+    rating2: nowMode === "rating DESC" ? true : false,
+    location: nowMode === "location" ? true : false,
+    category: nowMode === "category" ? true : false,
+    appear: "selected"
+  };
+
+  console.log(nowMode)
+
   return Restaurant.findAll({
     attributes: [
       "id",
@@ -37,8 +58,9 @@ app.get("/restaurants", (req, res) => {
       "description",
     ],
     raw: true,
+    order: [Sequelize.literal(nowMode)],
   })
-    .then((restaurants) => res.render("index", { restaurants }))
+    .then((restaurants) => res.render("index", { restaurants, option }))
     .catch((err) => console.log(err));
 });
 
