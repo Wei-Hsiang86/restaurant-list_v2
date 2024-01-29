@@ -31,9 +31,6 @@ router.get("/", (req, res, next) => {
     appear: "selected",
   };
 
-  console.log(Number.isNaN(parseInt(req.query.page)));
-  console.log(nowPage)
-
   return Restaurant.findAll({
     attributes: [
       "id",
@@ -49,10 +46,12 @@ router.get("/", (req, res, next) => {
     ],
     raw: true,
     order: [Sequelize.literal(nowMode)],
+    offset: (nowPage - 1) * limit,
+    limit,
   })
     .then((restaurants) => {
       return res.render("index", {
-        restaurants: restaurants.slice((nowPage - 1) * limit, nowPage * limit),
+        restaurants,
         prev: nowPage > 1 ? nowPage - 1 : nowPage,
         next: nowPage + 1,
         nowPage,
