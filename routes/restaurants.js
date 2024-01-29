@@ -6,17 +6,19 @@ const { Sequelize } = require("sequelize");
 const db = require("../models");
 const Restaurant = db.Restaurant;
 
-let nowPage = 0;
-let nowMode = "";
+let nowPage = 1;
+let nowMode = "id";
 
 router.get("/", (req, res, next) => {
+
   // 排序用
-  const webPara = req.originalUrl;
-  const mode = req.originalUrl.sortMode;
+  const mode = req.query.sortMode;
+  nowMode = (typeof(mode)!=="undefined") ? mode : nowMode
 
   // 分頁用
-  const page = parseInt(req.query.page) || 1;
+  const page = Number.isNaN(parseInt(req.query.page)) ? nowPage : parseInt(req.query.page)
   const limit = 6;
+  nowPage = page
 
   sortSelect = {
     id: nowMode === "id" ? true : false,
@@ -27,11 +29,10 @@ router.get("/", (req, res, next) => {
     location: nowMode === "location" ? true : false,
     category: nowMode === "category" ? true : false,
     appear: "selected",
-    page: page,
   };
 
-  console.log(webPara);
-  console.log(req.query.sortMode);
+  console.log(Number.isNaN(parseInt(req.query.page)));
+  console.log(nowPage)
 
   return Restaurant.findAll({
     attributes: [
@@ -47,14 +48,14 @@ router.get("/", (req, res, next) => {
       "description",
     ],
     raw: true,
-    order: [Sequelize.literal("rating")],
+    order: [Sequelize.literal(nowMode)],
   })
     .then((restaurants) => {
       return res.render("index", {
-        restaurants: restaurants.slice((page - 1) * limit, page * limit),
-        prev: page > 1 ? page - 1 : page,
-        next: page + 1,
-        page,
+        restaurants: restaurants.slice((nowPage - 1) * limit, nowPage * limit),
+        prev: nowPage > 1 ? nowPage - 1 : nowPage,
+        next: nowPage + 1,
+        nowPage,
         sortSelect,
       });
     })
