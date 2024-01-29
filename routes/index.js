@@ -11,6 +11,7 @@ const db = require("../models");
 const Restaurant = db.Restaurant;
 
 let searchData = [];
+let searchValue= "";
 
 router.get("/", (req, res) => {
   res.redirect("/restaurants");
@@ -20,6 +21,7 @@ router.get("/", (req, res) => {
 router.get("/search", (req, res, next) => {
   const keyword = req.query.keyword?.trim();
   searchData = [];
+  searchValue = keyword
 
   if (keyword === "") {
     return res.redirect("/restaurants");
@@ -73,10 +75,9 @@ router.get("/search", (req, res, next) => {
         searchData.push(restaurants[i].id);
       }
 
-      console.log(searchData);
-
       return res.render("search", {
         restaurants,
+        searchValue
       });
     })
     .catch((error) => {
@@ -114,6 +115,7 @@ router.post("/search", (req, res, next) => {
       res.render("search", {
         restaurants,
         sortSelect,
+        searchValue
       })
     )
     .catch((error) => {
