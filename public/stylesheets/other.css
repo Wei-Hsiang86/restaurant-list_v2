@@ -26,7 +26,7 @@ body {
   filter: blur(3px);
 }
 
-/* index 樣式設定 */
+/* index & search 樣式設定 */
 .search-bar .search-bar-outer {
   margin: 0 auto;
   max-width: 680px;
@@ -64,6 +64,17 @@ body {
 
 .sortMode {
   flex-direction:row-reverse
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pageNum {
+  font-size: medium;
+  font-weight: 800;
 }
 
 /* new 也有用到 card 樣式 */

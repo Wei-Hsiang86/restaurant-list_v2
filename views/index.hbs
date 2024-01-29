@@ -39,8 +39,6 @@
           </form>
         </div>
 
-
-
       </div>
 
     </div>
@@ -48,14 +46,13 @@
 </div>
 
 <div class="intro">
-  <p><i class="fa-solid fa-star"></i> 點擊鉛筆（<i class="fa-solid fa-pen-to-square"></i>）進行編輯；垃圾桶（<i
-      class="fa-regular fa-trash-can"></i>）可以刪除；more 知道更多資訊</p>
-
-
+  <p><i class="fa-solid fa-star"></i> 點選擊鉛筆（<i class="fa-solid fa-pen-to-square"></i>）進行編輯；垃圾桶（<i
+      class="fa-regular fa-trash-can"></i>）可以刪除</p>
+  <p><i class="fa-solid fa-star"></i> 點選"我的餐廳清單"可回首頁；"more"知道更多資訊</p>
 </div>
 
 {{!-- restaurant list --}}
-<div class="container mt-5">
+<div class="container mt-4">
   <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3 mx-auto">
 
     {{#each restaurants as |restaurant|}}
@@ -84,12 +81,23 @@
                     class="fa-solid fa-trash-can fa-sm"></i></button>
               </form>
             </span>
-
         </div>
       </div>
     </div>
     {{/each}}
 
   </div>
+</div>
 
+{{!-- pagination --}}
+<div class="pagination mt-3">
+  <form action="/restaurants" method="GET" style="display: inline;">
+    <input type="hidden" name="page" value="{{prev}}">
+    <button type="submit" class="btn btn-outline-success">prev</button>
+  </form>
+  <form action="/restaurants" method="GET" style="display: inline;">
+    <input type="hidden" name="page" value="{{next}}">
+    <button type="submit" class="btn btn-outline-success mx-2">next</button>
+  </form>
+  <p class="pageNum">目前頁數: {{page}}</p>
 </div>

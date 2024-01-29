@@ -8,7 +8,8 @@
         <h4 class="mb-2">尋找餐廳：</h4>
         <div class="input-group">
           <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類 yo~"
-            aria-label="Restaurant Name..." value="{{keyword}}{{#if true}}{{searchValue}}{{/if}}" aria-describedby="search-button" />
+            aria-label="Restaurant Name..." value="{{keyword}}{{#if true}}{{searchValue}}{{/if}}"
+            aria-describedby="search-button" />
           <div class="input-group-append">
             <button class="btn btn-major" type="submit" id="search-button">Search <i
                 class="fa-solid fa-magnifying-glass"></i></button>
@@ -39,8 +40,6 @@
           </form>
         </div>
 
-
-
       </div>
 
     </div>
@@ -49,13 +48,12 @@
 
 <div class="intro">
   <p><i class="fa-solid fa-star"></i> 點擊鉛筆（<i class="fa-solid fa-pen-to-square"></i>）進行編輯；垃圾桶（<i
-      class="fa-regular fa-trash-can"></i>）可以刪除；more 知道更多資訊</p>
-
-
+      class="fa-regular fa-trash-can"></i>）可以刪除</p>
+  <p><i class="fa-solid fa-star"></i> 點選"我的餐廳清單"可回首頁；"more"知道更多資訊</p>
 </div>
 
 {{!-- restaurant list --}}
-<div class="container mt-5">
+<div class="container mt-4">
   <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3 mx-auto">
 
     {{#each restaurants as |restaurant|}}
@@ -91,5 +89,17 @@
     {{/each}}
 
   </div>
-
 </div>
+
+{{!-- pagination --}}
+{{!-- <div class="pagination mt-3">
+  <form action="/search" method="GET" style="display: inline;">
+    <input type="hidden" name="page" value="{{prev}}">
+    <button type="submit" class="btn btn-outline-success">prev</button>
+  </form>
+  <form action="/search" method="GET" style="display: inline;">
+    <input type="hidden" name="page" value="{{next}}">
+    <button type="submit" class="btn btn-outline-success mx-2">next</button>
+  </form>
+  <p class="pageNum">目前頁數: {{page}}</p>
+</div> --}}

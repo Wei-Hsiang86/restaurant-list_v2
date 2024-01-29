@@ -6,15 +6,18 @@ const { Sequelize } = require("sequelize");
 const db = require("../models");
 const Restaurant = db.Restaurant;
 
-router.get("/", (req, res, next) => {
-  const webPara = req.originalUrl;
-  const sort = webPara.includes("+") ? webPara.replace("+", " ") : webPara;
-  const site = sort.indexOf("=");
-  const len = sort.length;
-  const mode = sort.slice(site + 1, len);
-  const nowMode = mode === "/restaurants" ? "id" : mode;
+let nowPage = 0;
+let nowMode = "";
 
-  // 顯示排序用
+router.get("/", (req, res, next) => {
+  // 排序用
+  const webPara = req.originalUrl;
+  const mode = req.originalUrl.sortMode;
+
+  // 分頁用
+  const page = parseInt(req.query.page) || 1;
+  const limit = 6;
+
   sortSelect = {
     id: nowMode === "id" ? true : false,
     name1: nowMode === "name" ? true : false,
@@ -24,7 +27,11 @@ router.get("/", (req, res, next) => {
     location: nowMode === "location" ? true : false,
     category: nowMode === "category" ? true : false,
     appear: "selected",
+    page: page,
   };
+
+  console.log(webPara);
+  console.log(req.query.sortMode);
 
   return Restaurant.findAll({
     attributes: [
@@ -40,14 +47,17 @@ router.get("/", (req, res, next) => {
       "description",
     ],
     raw: true,
-    order: [Sequelize.literal(nowMode)],
+    order: [Sequelize.literal("rating")],
   })
-    .then((restaurants) =>
-      res.render("index", {
-        restaurants,
+    .then((restaurants) => {
+      return res.render("index", {
+        restaurants: restaurants.slice((page - 1) * limit, page * limit),
+        prev: page > 1 ? page - 1 : page,
+        next: page + 1,
+        page,
         sortSelect,
-      })
-    )
+      });
+    })
     .catch((error) => {
       error.errorMessage = "資料取得失敗Q";
       next(error);
