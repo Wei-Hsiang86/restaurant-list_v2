@@ -39,20 +39,20 @@
    **注意資料庫名稱，需與'/config/config.json'中 database 的名稱一致**
    **且下方 password 亦要輸入自行設定的密碼**
   
-  ```
-  create database restaurant
-  ```
+   ```
+   create database restaurant
+   ```
 
 5. 建立資料表：
   
-  ```
-  npx sequelize db:migrate
-  ```
+   ```
+   npx sequelize db:migrate
+   ```
 6. 建立預設資料：
 
-  ```
-  npx sequelize-cli db:seed:all
-  ```
+   ```
+   npx sequelize-cli db:seed:all
+   ```
 
 7. 執行 app.js：
 
