@@ -14,8 +14,8 @@ router.get("/", (req, res, next) => {
   const mode = sort.slice(site + 1, len);
   const nowMode = mode === "/restaurants" ? "id" : mode;
 
-  // 排序餐廳用
-  option = {
+  // 顯示排序用
+  sortSelect = {
     id: nowMode === "id" ? true : false,
     name1: nowMode === "name" ? true : false,
     name2: nowMode === "name DESC" ? true : false,
@@ -45,7 +45,7 @@ router.get("/", (req, res, next) => {
     .then((restaurants) =>
       res.render("index", {
         restaurants,
-        option,
+        sortSelect,
       })
     )
     .catch((error) => {

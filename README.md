@@ -8,6 +8,19 @@
 - 列出所有餐廳
 - 瀏覽餐廳相關資訊
 - 連結餐廳的地址到 Google 地圖
+- 搜尋＆排序功能 (2.1新增)
+- 分頁 (2.2新增)
+
+## 已知問題
+
+- 搜尋無法排序
+- 分頁無法排序
+
+## 版本
+
+- 2.2 (目前，版本號：)
+- ~~2.1.0~~ (版本號：7654df7) / 2.1.1 (版本號：)
+- ~~2.0~~ (版本號：46b5cfe)
 
 ## 使用
 
@@ -62,12 +75,14 @@
 ## 開發工具
 
 - Node.js: 18.15.0
-- Express: 4.18.2
-- Express-Handlebars: 7.1.2
-- Bootstrap: 5.1.3
-- Font-awesome: 6.4.2
+- express: 4.18.2
 - express-handlebars: 7.0.4
+- express-session: 1.17.3
+- dotenv: 16.0.3
+- connect-flash: 0.1.1
 - method-override: 3.0.0
 - mysql2: 3.2.0
 - sequelize: 6.30.0
 - sequelize-cli: 6.6.0
+- bootstrap: 5.1.3
+- font-awesome: 6.4.2
