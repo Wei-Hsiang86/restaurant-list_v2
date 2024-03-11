@@ -2,16 +2,16 @@ const express = require("express");
 const router = express.Router();
 const { Op } = require("sequelize");
 const { Sequelize } = require("sequelize");
-const restaurants = require("./restaurants");
 
-router.use("/restaurants", restaurants);
+const restaurants = require("./restaurants");
+const users = require("./users");
 
 // 使用 sequelize 此 ORM 套件來操作資料庫
 const db = require("../models");
 const Restaurant = db.Restaurant;
 
 let searchData = [];
-let searchValue= "";
+let searchValue = "";
 
 router.get("/", (req, res) => {
   res.redirect("/restaurants");
@@ -124,13 +124,29 @@ router.post("/search", (req, res, next) => {
       res.render("search", {
         restaurants,
         sortSelect,
-        searchValue
+        searchValue,
       })
     )
     .catch((error) => {
       error.errorMessage = "資料取得失敗Q";
       next(error);
     });
+});
+
+router.get("/register", (req, res) => {
+  return res.render("register");
+});
+
+router.get("/login", (req, res) => {
+  return res.render("login");
+});
+
+router.post("/login", (req, res) => {
+  return res.send(req.body);
+});
+
+router.post("/logout", (req, res) => {
+  return res.send("logout");
 });
 
 module.exports = router;
