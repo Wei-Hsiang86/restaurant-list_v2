@@ -10,11 +10,30 @@ const users = require("./users");
 const db = require("../models");
 const Restaurant = db.Restaurant;
 
+router.use("/restaurants", restaurants);
+router.use("/users", users);
+
 let searchData = [];
 let searchValue = "";
 
 router.get("/", (req, res) => {
   res.redirect("/restaurants");
+});
+
+router.get("/register", (req, res) => {
+  return res.render("register");
+});
+
+router.get("/login", (req, res) => {
+  return res.render("login");
+});
+
+router.post("/login", (req, res) => {
+  return res.send(req.body);
+});
+
+router.post("/logout", (req, res) => {
+  return res.send("logout");
 });
 
 //搜尋路由
@@ -131,22 +150,6 @@ router.post("/search", (req, res, next) => {
       error.errorMessage = "資料取得失敗Q";
       next(error);
     });
-});
-
-router.get("/register", (req, res) => {
-  return res.render("register");
-});
-
-router.get("/login", (req, res) => {
-  return res.render("login");
-});
-
-router.post("/login", (req, res) => {
-  return res.send(req.body);
-});
-
-router.post("/logout", (req, res) => {
-  return res.send("logout");
 });
 
 module.exports = router;

@@ -63,7 +63,7 @@ body {
 }
 
 .sortMode {
-  flex-direction:row-reverse
+  flex-direction: row-reverse;
 }
 
 .pagination {
@@ -80,7 +80,6 @@ body {
 /* new 也有用到 card 樣式 */
 .card {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-
 }
 
 .card img {
@@ -124,14 +123,14 @@ body {
 .alert {
   display: flex;
   /* 水平置中 */
-  justify-content: center;    
+  justify-content: center;
   /* 垂直置中 */
   align-items: center;
-  
+
   background-color: lightpink;
   width: 10%;
   font-size: 28px;
-  font-weight: bold;  
+  font-weight: bold;
 }
 
 @media screen and (max-width: 992px) {
@@ -150,4 +149,30 @@ body {
   .card img {
     height: auto;
   }
+}
+
+/* login 樣式設定 */
+.containerForLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* register 樣式設定 */
+.containerForRegister {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.registerCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
