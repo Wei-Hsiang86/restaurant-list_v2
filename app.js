@@ -1,22 +1,26 @@
 const express = require("express");
-const app = express();
-const port = 3000;
-
-const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const session = require("express-session");
-const passport = require("passport");
-const { engine } = require("express-handlebars");
+const app = express();
 
-// 一樣要注意調用的位置，放在 const app 後就無法執行了
+const passport = require("passport");
+
+// 一樣要注意調用的位置
 if (process.env.NODE_ENV === "development") {
+  // 如果是開發者模式，就呼叫取用 dotenv 模組
+  //.config() 是 dotenv 模組提供的一個方法，用於載入 .env 檔案中的環境變數並將它們設定到 process.env 中
   require("dotenv").config();
 }
+
+const { engine } = require("express-handlebars");
+const methodOverride = require("method-override");
 
 const router = require("./routes");
 
 const messageHandler = require("./middlewares/message-handler");
 const errorHandler = require("./middlewares/error-handler");
+
+const port = 3000;
 
 // handlebars 設定
 app.engine(".hbs", engine({ extname: ".hbs" }));
@@ -40,6 +44,7 @@ app.use(
 app.use(flash());
 
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(messageHandler);
 
