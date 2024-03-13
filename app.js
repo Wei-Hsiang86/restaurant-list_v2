@@ -1,10 +1,12 @@
 const express = require("express");
+const app = express();
+const port = 3000;
+
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const session = require("express-session");
+const passport = require("passport");
 const { engine } = require("express-handlebars");
-const app = express();
-const port = 3000;
 
 // 一樣要注意調用的位置，放在 const app 後就無法執行了
 if (process.env.NODE_ENV === "development") {
@@ -36,6 +38,8 @@ app.use(
 );
 
 app.use(flash());
+
+app.use(passport.initialize());
 
 app.use(messageHandler);
 

@@ -1,20 +1,50 @@
 const express = require("express");
 const router = express.Router();
+
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+
 const { Op } = require("sequelize");
 const { Sequelize } = require("sequelize");
-
-const restaurants = require("./restaurants");
-const users = require("./users");
 
 // 使用 sequelize 此 ORM 套件來操作資料庫
 const db = require("../models");
 const Restaurant = db.Restaurant;
-
-router.use("/restaurants", restaurants);
-router.use("/users", users);
+const User = db.User;
 
 let searchData = [];
 let searchValue = "";
+
+passport.use(
+  new LocalStrategy({ usernameField: "email" }, (username, password, done) => {
+    return User.findOne({
+      attributes: ["id", "name", "email", "password"],
+      where: { email: username },
+      raw: true,
+    })
+      .then((user) => {
+        if (!user || user.password !== password) {
+          return done(null, false, { message: "email 或密碼錯誤" });
+        }
+        return done(null, user);
+      })
+      .catch((error) => {
+        error.errorMessage = "登入失敗";
+        done(error);
+      });
+  })
+);
+
+passport.serializeUser((user, done) => {
+  const { id, name, email } = user;
+  return done(null, { id, name, email });
+});
+
+const restaurants = require("./restaurants");
+const users = require("./users");
+
+router.use("/restaurants", restaurants);
+router.use("/users", users);
 
 router.get("/", (req, res) => {
   res.redirect("/restaurants");
@@ -28,9 +58,12 @@ router.get("/login", (req, res) => {
   return res.render("login");
 });
 
-router.post("/login", (req, res) => {
-  return res.send(req.body);
-});
+router.post("/login", passport.authenticate("local", {
+  successRedirect: "/restaurants",
+  failureRedirect: "/login",
+  failureFlash: true,
+})
+);
 
 router.post("/logout", (req, res) => {
   return res.send("logout");
