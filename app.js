@@ -3,9 +3,9 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const app = express();
 
-const passport = require("passport");
-
 // 一樣要注意調用的位置
+// 因為 passport 的設定需要引用環境變數
+// 所以需要將 passport 的引用，放在 .env 之後
 if (process.env.NODE_ENV === "development") {
   // 如果是開發者模式，就呼叫取用 dotenv 模組
   //.config() 是 dotenv 模組提供的一個方法，用於載入 .env 檔案中的環境變數並將它們設定到 process.env 中
@@ -16,6 +16,7 @@ const { engine } = require("express-handlebars");
 const methodOverride = require("method-override");
 
 const router = require("./routes");
+const passport = require("./config/passport");
 
 const messageHandler = require("./middlewares/message-handler");
 const errorHandler = require("./middlewares/error-handler");
