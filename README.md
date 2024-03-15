@@ -1,4 +1,4 @@
-# AC exercising _ My Restaurant List
+# AC exercising \_ My Restaurant List
 
 - 練習製作餐廳清單，可以瀏覽收藏的餐廳、相關資訊等等
 - 此次 V2 資料使用 mysql ，若想參考使用 json 檔案，可至另個專案查看
@@ -89,17 +89,18 @@
 - 自行/圖案：[font-awesome](https://fontawesome.com/): ^6.4.2
 
 - 資料庫相關：
-- [mysql2](https://www.npmjs.com/package/mysql2): ^3.2.0
-- [sequelize-cli](https://sequelize.org/docs/v6/): ^6.6.0
+
+  1. [mysql2](https://www.npmjs.com/package/mysql2): ^3.2.0
+  2. [sequelize-cli](https://sequelize.org/docs/v6/): ^6.6.0
 
 - 驗證登入相關：
-- [passport](https://www.passportjs.org/): ^0.6.0
-- passport-local: ^1.0.0
-- passport-facebook: ^3.0.0
-- [bcryptjs](https://www.npmjs.com/package/bcryptjs): ^2.4.3
+  1. [passport](https://www.passportjs.org/): ^0.6.0
+  2. passport-local: ^1.0.0
+  3. passport-facebook: ^3.0.0
+  4. [bcryptjs](https://www.npmjs.com/package/bcryptjs): ^2.4.3
 
 - NPM 套件：
-- [express-session](https://www.npmjs.com/package/express-session): ^1.17.3
-- [connect-flash](https://www.npmjs.com/package/connect-flash): ^0.1.1
-- [dotenv](https://www.npmjs.com/package/dotenv): ^16.0.3
-- [method-override](https://www.npmjs.com/package/method-override): ^3.0.0
+  1. [express-session](https://www.npmjs.com/package/express-session): ^1.17.3
+  2. [connect-flash](https://www.npmjs.com/package/connect-flash): ^0.1.1
+  3. [dotenv](https://www.npmjs.com/package/dotenv): ^16.0.3
+  4. [method-override](https://www.npmjs.com/package/method-override): ^3.0.0
