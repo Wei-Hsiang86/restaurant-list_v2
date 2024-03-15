@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcryptjs");
 
 // 使用 sequelize 此 ORM 套件來操作資料庫
 const db = require("../models");
@@ -25,7 +26,9 @@ router.post("/", (req, res) => {
         return;
       }
 
-      return User.create({ email, name, password });
+      return bcrypt.hash(password, 10).then((hash) => {
+        return User.create({ email, name, password: hash });
+      });
     })
     .then((user) => {
       if (!user) {

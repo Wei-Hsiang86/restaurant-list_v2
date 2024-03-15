@@ -3,6 +3,7 @@ const router = express.Router();
 
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const bcrypt = require("bcryptjs");
 
 const { Op } = require("sequelize");
 const { Sequelize } = require("sequelize");
@@ -23,10 +24,16 @@ passport.use(
       raw: true,
     })
       .then((user) => {
-        if (!user || user.password !== password) {
+        if (!user) {
           return done(null, false, { message: "email 或密碼錯誤" });
         }
-        return done(null, user);
+        return bcrypt.compare(password, user.password).then((isMatch) => {
+          if (!isMatch) {
+            return done(null, false, { message: "email 或密碼錯誤" });
+          }
+
+          return done(null, user);
+        });
       })
       .catch((error) => {
         error.errorMessage = "登入失敗";
@@ -48,6 +55,7 @@ const restaurants = require("./restaurants");
 const users = require("./users");
 const authHandler = require("../middlewares/auth-handler");
 
+// 分配子路由
 router.use("/restaurants", authHandler, restaurants);
 router.use("/users", users);
 
@@ -63,11 +71,13 @@ router.get("/login", (req, res) => {
   return res.render("login");
 });
 
-router.post("/login", passport.authenticate("local", {
-  successRedirect: "/restaurants",
-  failureRedirect: "/login",
-  failureFlash: true,
-})
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/restaurants",
+    failureRedirect: "/login",
+    failureFlash: true,
+  })
 );
 
 router.post("/logout", (req, res, next) => {
