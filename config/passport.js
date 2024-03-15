@@ -50,20 +50,18 @@ passport.use(
         raw: true,
       })
         .then((user) => {
-          if (user) return done(null, {});
+          if (user) return done(null, user);
 
           const randomPwd = Math.random().toString(36).slice(-8);
 
-          return (
-            bcrypt
-              .hash(randomPwd, 10)
-              // 存入資料庫
-              .then((hash) => User.create({ name, email, password: hash }))
+          return (bcrypt.hash(randomPwd, 10)
+            // 存入資料庫
+            .then((hash) => User.create({ name, email, password: hash }))
 
-              // 呼叫 callback 並傳入使用者資料
-              .then((user) =>
-                done(null, { id: user.id, name: user.name, email: user.email })
-              )
+            // 呼叫 callback 並傳入使用者資料
+            .then((user) =>
+              done(null, { id: user.id, name: user.name, email: user.email })
+            )
           );
         })
 
