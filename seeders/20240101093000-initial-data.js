@@ -7,22 +7,20 @@ module.exports = {
     let transaction;
 
     try {
-      const hash = await bcrypt.hash('123', 10)
+      const hash = await bcrypt.hash("12345678", 10);
 
-      transaction = await queryInterface.sequelize.transaction()
+      transaction = await queryInterface.sequelize.transaction();
 
       await queryInterface.bulkInsert(
         "Users",
-        [
-          {
-            id: 1,
-            name: "root",
-            email: "test1@testmail.com",
-            password: hash,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          },
-        ],
+        Array.from({ length: 2 }).map((_, i) => ({
+          id: i + 1,
+          name: `root-${i + 1}`,
+          email: `user${i + 1}@example.com`,
+          password: hash,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        })),
         { transaction }
       );
 
@@ -92,7 +90,7 @@ module.exports = {
             rating: 4.2,
             description:
               "從味蕾開始，重拾美味感動。艾朋牛排餐酒館對高級料理的細選珍饌堅持，更勇於翻脫新意，要以平易親人的親切風格，同時不失料理獨家精髓，成功打動每吋挑剔味蕾，讓每位顧客享用鮮嫩Steak牛排風采，咀嚼Pasta義大利麵層次風味！",
-            userId: 1,
+            userId: 2,
             createdAt: new Date(),
             updatedAt: new Date(),
           },
@@ -109,7 +107,7 @@ module.exports = {
             rating: 4.7,
             description:
               "我們的披薩師傅從倫敦帶來別於一般口味的經典義大利披薩，而且披薩麵團至少發酵24小時。同時我們也窯烤麵包及甜點，但披薩才是GUSTO最強項。我們製做的每一份餐點，都充滿飽飽的口味及香氣。除此之外，遵循純手工及傳統方式製作是我們的堅持。",
-            userId: 1,
+            userId: 2,
             createdAt: new Date(),
             updatedAt: new Date(),
           },
@@ -126,7 +124,7 @@ module.exports = {
             rating: 4.3,
             description:
               "紅酒吧，現代創意料理，開胃小館。提供純素選擇，提供無麩質選擇，提供素食選擇。",
-            userId: 1,
+            userId: 2,
             createdAt: new Date(),
             updatedAt: new Date(),
           },
@@ -160,7 +158,7 @@ module.exports = {
             rating: 4.7,
             description:
               "我們希望帶給您的，不只是啤酒，有美食，還有一份對生活的熱情。 義大利語「Bravo」的原意─「喝采」、「讚揚」， 我想著如果有一個大家都能輕鬆品嚐美酒、享受美食的地方，那就真的是太棒了！ 因為這個念頭，加上一股對比利時啤酒的熱情， 於是「Bravo Beer布娜飛比利時啤酒餐廳」在2006年誕生了...",
-            userId: 1,
+            userId: 2,
             createdAt: new Date(),
             updatedAt: new Date(),
           },
